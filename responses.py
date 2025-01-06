@@ -2,7 +2,7 @@ import discord
 from discord import app_commands, Embed, Interaction
 from discord.ext import commands
 from discord.ui import Button, Select, View
-from embeds import Embeds
+from embeds import Embeds, Quotes
 import random
 
 # All commands
@@ -15,7 +15,7 @@ def setup_commands(bot: commands.Bot):
     async def explore(interaction: Interaction, location: app_commands.Choice[str] = None):
         if location:
             if location.value == "market":
-                shopkeeper_quote = random.choice(shopkeeper_quotes)
+                shopkeeper_quote = Quotes.random_shopkeeper()
                 embed = Embeds.market(shopkeeper_quote)
             elif location.value == "church":
                 embed = Embeds.church()
@@ -27,6 +27,11 @@ def setup_commands(bot: commands.Bot):
             embed = Embeds.explore()
             view = LocationSelect()
             await interaction.response.send_message(embed=embed, view=view)
+    
+    # HELLO - TEST COMMAND
+    @bot.tree.command(name="hello", description="Say hello!")
+    async def hello(interaction: discord.Interaction):
+        await interaction.response.send_message("Hello there!")
 
 # =============== DROPDOWNS ===============
 class LocationSelect(View):
@@ -50,7 +55,7 @@ class LocationDropdown(Select):
 
     async def callback(self, interaction: Interaction):
         if self.values[0] == "apothecary":
-            potionmaster_quote = random.choice(potionmaster_quotes)
+            potionmaster_quote = Quotes.random_potionmaster()
             embed = Embeds.apothecary(potionmaster_quote)
         elif self.values[0] == "church":
             embed = Embeds.church()
@@ -63,7 +68,7 @@ class LocationDropdown(Select):
         elif self.values[0] == "home":
             embed = Embeds.home()
         elif self.values[0] == "market":
-            shopkeeper_quote = random.choice(shopkeeper_quotes)
+            shopkeeper_quote = Quotes.random_shopkeeper()
             embed = Embeds.market(shopkeeper_quote)
         elif self.values[0] == "townsquare":
             embed = Embeds.townsquare()
@@ -72,32 +77,6 @@ class LocationDropdown(Select):
         else:
             embed = Embed(title="Unknown", description="This location does not exist.")
         await interaction.response.edit_message(embed=embed)
-
-# =============== QUOTES ===============
-shopkeeper_quotes = [
-    '"Welcome to the Market! What are you in the mood to buy today?"',
-    '"Ah, a customer! Can I interest you in some fine wares?"',
-    '"Step right up! The finest items in all the land are here!"',
-    '"Looking for something special? I\'ve got just the thing for you."',
-    '"Only the best for Masters like you! What can I get for you today?"',
-    '"Ah, a fellow Master! Care to see what I have on offer?"',
-    '"A wise Master knows when to shop! How can I help you today?"',
-    '"A little shopping never hurt anyone, right? What can I get for you?"',
-    '"Is there anything you desire? I\'ve got plenty to offer!"'
-]
-potionmaster_quotes = [
-    '"Care for a potion? They\'re *purr-fect* for any adventure!"',
-    '"Step in, human! My potions are the cat\'s whiskers!"',
-    '"Looking for magic? You\'ve come to the right cat!"',
-    '"Best potions in town, paws down!"',
-    '"Curiosity got you here—leave with a potion!"',
-    '"Stock up before your next cat-astrophe!"',
-    '"Every sip\'s worth the gold! Care to try one?"',
-    '"Don\'t paws! My potions are one of a kind!"',
-    '"Meow! What\'ll it be, human? Healing or magic?"',
-    '"A potion a day keeps trouble away. Take one!"'
-]
-
 
 location_options = [
     app_commands.Choice(name="Market", value="market"),
