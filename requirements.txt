@@ -1,0 +1,32 @@
+# Requirements file for Discord bot project
+
+# Main dependencies for the bot
+discord.py==2.4.0
+aiohttp==3.11.11
+aiohappyeyeballs==2.4.4
+aiosignal==1.3.2
+attrs==24.3.0
+frozenlist==1.5.0
+multidict==6.1.0
+propcache==0.2.1
+yarl==1.18.3
+idna==3.10
+
+# Dotenv for environment variable management
+python-dotenv==1.0.1
+
+# Image manipulation library
+pillow==11.1.0
+
+# HTTP requests library
+requests==2.32.3
+
+# Dependencies for requests
+charset-normalizer==3.4.1
+urllib3==2.3.0
+certifi==2024.12.14
+
+# Optional dependencies or constraints (if needed)
+# You can add other dependencies if they are required by your project.
+# For example, uncomment the following line if you are using `pytest` for testing.
+# pytest==7.2.0
