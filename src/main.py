@@ -19,7 +19,7 @@ setup_commands(bot)
 # STEP 3: HANDLING THE STARTUP FOR OUR BOT
 @bot.event
 async def on_ready():
-    print(f'{bot.user} is now running!')
+    print('successfully finished startup')
 
     # Add this to confirm slash command sync
     synced_commands = await bot.tree.sync()
